@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>Run fast food</title>
+
+    <!-- Google Font + Font Awesome -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+    :root{
+        --bg-1: #f8f6f4;  /* ขาวอมครีม */
+        --card: #ffffff; /* กล่องสีขาว */
+        --accent-1: #ff9a4f; /* ส้มอ่อน */
+        --accent-2: #ff7a29; /* ส้มเข้ม */
+        --accent-3: #ffb78a; /* ส้มพาสเทล */
+        --muted: rgba(60,60,60,0.65); /* เทาอ่านง่าย */
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+        margin:0;
+        font-family:"Inter", system-ui, sans-serif;
+        background:
+            radial-gradient(1200px 600px at 10% 10%, rgba(255,180,120,0.25), transparent 40%),
+            radial-gradient(900px 400px at 90% 80%, rgba(255,160,100,0.15), transparent 50%),
+            var(--bg-1);
+        color:#333;
+        -webkit-font-smoothing:antialiased;
+        min-height:100vh;
+    }
+
+    header{
+        padding:28px 16px;
+        text-align:center;
+        position:relative;
+        border-bottom:1px solid rgba(255,140,80,0.25);
+        background:linear-gradient(180deg, rgba(255,180,120,0.2), transparent 60%);
+        box-shadow:0 4px 20px rgba(255,150,90,0.10) inset;
+    }
+
+    .brand-box{
+    display:inline-flex;
+    align-items:center;
+    gap:18px;
+    padding:10px 18px;
+    border-radius:14px;
+    background:linear-gradient(90deg, rgba(255,180,120,0.18), rgba(255,120,80,0.05));
+    backdrop-filter:blur(6px);
+
+  /* ⭐ เงาฟุ้งมากขึ้น + เงาซ้อน 2 ชั้น */
+box-shadow:
+    0 10px 26px rgba(255,130,70,0.32),
+    0 18px 40px rgba(255,140,80,0.25);
+
+}
+
+
+    .logo-img{
+        width:140px;
+        border-radius:8px;
+        box-shadow:0 6px 14px rgba(255,120,80,0.20);
+    }
+
+    header h1{
+        margin:0;
+        font-size:2.6rem;
+        font-weight:800;
+        color:#ff7a29;
+        text-shadow:0 4px 12px rgba(255,140,80,0.15);
+    }
+
+    /* cart icon */
+    #cart-icon{
+        position:fixed;
+        top:18px;
+        right:18px;
+        z-index:1200;
+    }
+
+    #cart-icon i{
+        width:64px;
+        height:64px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:28px;
+        border-radius:14px;
+        background:linear-gradient(180deg, #fcc01d, #ff6200);
+        color:#fff;
+        box-shadow:0 6px 16px rgba(255,130,70,0.22);
+        transition:.2s;
+    }
+
+    #cart-icon i:hover{
+        transform:translateY(-4px) scale(1.05);
+        box-shadow:0 12px 24px rgba(255,130,70,0.32);
+    }
+
+    /* layout */
+    main{
+        max-width:1300px;
+        margin:26px auto;
+        padding:10px 18px 60px;
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:22px;
+    }
+
+    /* product section */
+    section{
+        background:#ffffff;
+        padding:22px;
+        border-radius:16px;
+        border:1px solid rgba(0,0,0,0.05);
+        box-shadow:0 6px 18px rgba(0,0,0,0.06);
+        flex:0 0 400px;
+        min-width:300px;
+        max-width:450px;
+        transition:.2s;
+    }
+
+    section:hover{
+        transform:translateY(-6px);
+        box-shadow:0 14px 26px rgba(255,140,80,0.16);
+    }
+
+    section h2{
+        text-align:center;
+        margin:0 0 12px;
+        font-size:1.5rem;
+        color:#ff7a29;
+        border-bottom:1px dashed rgba(255,120,80,0.25);
+        padding-bottom:10px;
+    }
+
+    /* items */
+    .menu-item{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:14px;
+        padding:14px 10px;
+        border-radius:12px;
+        background:#ffffff;
+        border:1px solid rgba(0,0,0,0.06);
+        box-shadow:0 4px 12px rgba(0,0,0,0.05);
+        margin-bottom:12px;
+        transition:.18s;
+    }
+
+    .menu-item:hover{
+        transform:translateY(-4px);
+        box-shadow:0 12px 20px rgba(255,140,80,0.18);
+    }
+
+    .menu-img{
+        width:260px;
+        height:220px;
+        object-fit:cover;
+        border-radius:12px;
+        border:3px solid rgba(255,150,100,0.25);
+        box-shadow:0 6px 12px rgba(0,0,0,0.10);
+    }
+
+    .menu-info h3{
+        margin:0;
+        font-size:1.05rem;
+        color:#333;
+        max-width:180px;
+        font-weight:700;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+    }
+
+    .menu-info p{
+        margin:6px 0 0;
+        color:#666;
+        font-size:0.9rem;
+    }
+
+    .select-btn{
+        background:linear-gradient(180deg, var(--accent-1), var(--accent-2));
+        color:#fff;
+        border:none;
+        padding:10px 14px;
+        border-radius:12px;
+        cursor:pointer;
+        width:100px;
+        font-weight:700;
+        box-shadow:0 6px 16px rgba(255,150,80,0.25);
+        transition:.16s;
+    }
+
+    .select-btn:hover{
+        transform:translateY(-3px);
+        box-shadow:0 12px 24px rgba(255,140,80,0.28);
+    }
+
+    /* mobile */
+    @media (max-width:480px){
+        header h1{ font-size:1.7rem; }
+        .logo-img{ width:110px; }
+        #cart-icon i{ width:52px; height:52px; font-size:20px; }
+        section{ flex:0 0 92%; max-width:92%; }
+        .menu-info h3{ max-width:120px; }
+    }
+    /* ===== overlay text on menu image ===== */
+.menu-item{
+    position:relative;
+    overflow:hidden;
+}
+
+.menu-label{
+    position:absolute;
+    bottom:18px;
+    left:50%;
+    transform:translateX(-50%);
+    padding:14px 34px;
+    background:linear-gradient(
+        180deg,
+        rgba(255,154,79,0.95),
+        rgba(255,122,41,0.95)
+    );
+    color:#fff;
+    font-size:1.6rem;          /* ⭐ ตัวอักษรใหญ่ขึ้น */
+    font-weight:900;
+    border-radius:20px;        /* ⭐ กรอบใหญ่ขึ้น */
+    backdrop-filter:blur(8px);
+    box-shadow:
+        0 10px 26px rgba(255,120,60,0.45),
+        0 0 0 3px rgba(255,255,255,0.25) inset;
+    letter-spacing:2px;        /* ⭐ ตัวอักษรดูโปร */
+    text-transform:uppercase;
+}
+w
+.menu-item:hover .menu-label{
+    transform:translateX(-50%) translateY(-6px) scale(1.05);
+    box-shadow:
+        0 18px 36px rgba(218, 207, 203, 0.55),
+        0 0 0 3px rgba(255,255,255,0.35) inset;
+}
+
+/* mobile */
+@media (max-width:480px){
+    .menu-label{
+        font-size:1.25rem;
+        padding:10px 24px;
+        bottom:14px;
+    }
+}
+
+</style>
+
+</head>
+<body>
+
+<header>
+    <div class="brand-box">
+        <img src="qqq-removebg-preview (1).png" class="logo-img" alt="Bangmeatballs Logo">
+        <h1>Run fast food</h1>
+    </div>
+</header>
+
+<!-- Cart icon -->
+<div id="cart-icon" title="ไปที่ตะกร้า">
+    <a href="cart.html" aria-label="Cart">
+        <i class="fa-solid fa-cart-shopping"></i>
+    </a>
+</div>
+
+<main>
+    
+
+    <section id="menu-list">
+        <a href="menub.html" class="menu-item">
+    <div class="menu-left">
+        <img src="krapao.png" class="menu-img" alt="ลูกชิ้น">
+        <div class="menu-label">ประเภทข้าว</div>
+    </div>
+</a>
+    </section>
+<section id="menu-list">
+        <a href="menuw.html" class="menu-item">
+    <div class="menu-left">
+        <img src="yum.png" class="menu-img" alt="น้ำ">
+        <div class="menu-label">ประเภทยำ</div>
+    </div>
+</a>
+ </section>
+        
+
+</main>
+
+<script>
+/* flyToCart animation and cart storage - keeps same behavior as before */
+function flyToCart(imgElement, callback){
+    const cartIcon = document.querySelector('#cart-icon i');
+
+    // create clone
+    let imgClone = imgElement.cloneNode(true);
+    let rect = imgElement.getBoundingClientRect();
+
+    imgClone.style.position = 'fixed';
+    imgClone.style.left = rect.left + 'px';
+    imgClone.style.top = rect.top + 'px';
+    imgClone.style.width = imgElement.offsetWidth + 'px';
+    imgClone.style.height = imgElement.offsetHeight + 'px';
+    imgClone.style.transition = 'all 0.75s cubic-bezier(.2,.8,.2,1)';
+    imgClone.style.zIndex = '10000';
+    imgClone.style.borderRadius = window.getComputedStyle(imgElement).borderRadius;
+    document.body.appendChild(imgClone);
+
+    // target
+    setTimeout(() => {
+        let cartRect = cartIcon.getBoundingClientRect();
+        imgClone.style.left = (cartRect.left + (cartRect.width/2) - 10) + 'px';
+        imgClone.style.top = (cartRect.top + (cartRect.height/2) - 10) + 'px';
+        imgClone.style.width = '20px';
+        imgClone.style.height = '20px';
+        imgClone.style.opacity = '0.15';
+        imgClone.style.transform = 'rotate(20deg)';
+    }, 30);
+
+    imgClone.addEventListener('transitionend', () => {
+        imgClone.remove();
+        if(callback) callback();
+    });
+}
+
+function addToCart(name, price, image){
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let idx = cart.findIndex(it => it.name === name);
+    if(idx !== -1){
+        cart[idx].qty += 1;
+    } else {
+        cart.push({name, price, qty:1, image});
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    // optional: show a quick toast
+    showToast(`${name} ถูกเพิ่มลงตะกร้า`);
+}
+
+function showToast(text){
+    // create temporary toast
+    const t = document.createElement('div');
+    t.textContent = text;
+    t.style.position = 'fixed';
+    t.style.left = '50%';
+    t.style.bottom = '26px';
+    t.style.transform = 'translateX(-50%)';
+    t.style.background = 'linear-gradient(90deg, rgba(255,110,0,0.95), rgba(255,50,0,0.95))';
+    t.style.padding = '10px 16px';
+    t.style.borderRadius = '12px';
+    t.style.boxShadow = '0 8px 30px rgba(255,60,0,0.18)';
+    t.style.color = '#fff';
+    t.style.fontWeight = '700';
+    t.style.zIndex = '11000';
+    t.style.opacity = '0';
+    t.style.transition = 'opacity .2s ease, transform .2s ease';
+    document.body.appendChild(t);
+    requestAnimationFrame(()=>{ t.style.opacity = '1'; t.style.transform = 'translateX(-50%) translateY(-6px)'; });
+    setTimeout(()=>{ t.style.opacity = '0'; t.style.transform = 'translateX(-50%) translateY(0px)'; }, 900);
+    setTimeout(()=> t.remove(), 1200);
+}
+
+/* attach events to buttons (also grabs image src) */
+
+</script>
+
+</body>
+</html>
