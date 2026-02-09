@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>ออเดอร์ลูกค้า | Bangmeatballs</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root{
+    --accent1:#ff9a4f;
+    --accent2:#ff7a29;
+    --bg:#f8f6f4;
+}
+
+body{
+    margin:0;
+    font-family:Inter,system-ui,sans-serif;
+    background:var(--bg);
+    padding:20px;
+}
+
+.container{
+    max-width:520px;
+    margin:auto;
+    background:#fff;
+    border-radius:20px;
+    padding:22px;
+    box-shadow:0 12px 30px rgba(0,0,0,.1);
+}
+
+h1{
+    text-align:center;
+    margin-top:0;
+    color:var(--accent2);
+}
+
+/* order item (คลิกได้) */
+.order-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:10px 0;
+    border-bottom:1px dashed #ddd;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.order-item:hover{
+    background:#fff6ef;
+    transform:translateY(-2px);
+}
+
+.order-item img{
+    width:60px;
+    height:60px;
+    object-fit:cover;
+    border-radius:12px;
+    border:2px solid rgba(255,150,80,.3);
+}
+
+.order-info{
+    flex:1;
+}
+
+.order-name{
+    font-weight:700;
+    font-size:.95rem;
+}
+
+.order-qty{
+    font-size:.85rem;
+    color:#666;
+}
+
+.order-price{
+    font-weight:800;
+    color:#333;
+}
+
+/* total */
+.total{
+    text-align:right;
+    font-size:1.1rem;
+    font-weight:800;
+    margin-top:14px;
+}
+
+/* buttons */
+button{
+    width:100%;
+    margin-top:16px;
+    padding:14px;
+    border:none;
+    border-radius:16px;
+    background:linear-gradient(180deg,var(--accent1),var(--accent2));
+    color:#fff;
+    font-weight:800;
+    font-size:1rem;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(255,140,80,.35);
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+.back-btn{
+    background:#eee;
+    color:#333;
+    box-shadow:none;
+    margin-top:10px;
+}
+/* highlighted selected item */
+.order-item.active{
+    background:linear-gradient(
+        180deg,
+        rgba(255,154,79,.25),
+        rgba(255,122,41,.15)
+    );
+    border-radius:14px;
+    animation:pop .35s ease;
+}
+
+@keyframes pop{
+    0%{
+        transform:scale(.95);
+        opacity:.5;
+    }
+    100%{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🧾 รายการออเดอร์</h1>
+
+    <div id="order-list"></div>
+
+    <div class="total" id="order-total">รวมทั้งหมด 0 บาท</div>
+
+    <button onclick="confirmOrder()">
+        <i class="fa-solid fa-fire"></i> ยืนยันออเดอร์
+    </button>
+
+    <button class="back-btn" onclick="goBack()">
+        <i class="fa-solid fa-arrow-left"></i> กลับไปตะกร้า
+    </button>
+</div>
+
+<script>
+const cart = JSON.parse(localStorage.getItem('cart')) || [];
+const listEl = document.getElementById('order-list');
+const totalEl = document.getElementById('order-total');
+
+let total = 0;
+
+if(cart.length === 0){
+    listEl.innerHTML = "<p style='text-align:center;color:#888'>ไม่มีรายการสินค้า</p>";
+}else{
+    const selectedIndex = localStorage.getItem('selectedItem');
+
+cart.forEach((item,index)=>{
+    const div = document.createElement('div');
+    div.className = 'order-item';
+
+    if(selectedIndex !== null && index == selectedIndex){
+        div.classList.add('active');
+        div.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+
+    div.onclick = () => {
+        window.location.href = 'cart.html';
+    };
+
+    div.innerHTML = `
+        <img src="${item.image || item.img || 'placeholder.png'}" alt="${item.name}">
+        <div class="order-info">
+            <div class="order-name">${item.name}</div>
+            <div class="order-qty">จำนวน ${item.qty} ชิ้น</div>
+        </div>
+        <div class="order-price">${item.price * item.qty} ฿</div>
+    `;
+
+    listEl.appendChild(div);
+    total += item.price * item.qty;
+});
+}
+
+totalEl.textContent = `รวมทั้งหมด ${total} บาท`;
+
+function confirmOrder(){
+    localStorage.setItem('orderStatus','1'); // กำลังทำ
+    window.location.href = 'cart.html';
+}
+
+function goBack(){
+    window.location.href = 'cart.html';
+}
+</script>
+
+</body>
+</html>

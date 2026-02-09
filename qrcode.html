@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>สแกน QR Code - Run fast food</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #FFF7F0;
+            color: #333;
+        }
+
+        header {
+            background-color: #FF8C42;
+            padding: 22px;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            color: white;
+            border-bottom: 4px solid #FFC58B;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        /* ปุ่มดูออเดอร์ */
+        .order-btn{
+            position:fixed;
+            top:18px;
+            right:18px;
+            background:linear-gradient(180deg,#150c05,#221107);
+            color:#fff;
+            padding:12px 18px;
+            border-radius:14px;
+            font-weight:bold;
+            font-size:1em;
+            text-decoration:none;
+            box-shadow:0 6px 18px rgba(255,140,66,.45);
+            display:flex;
+            align-items:center;
+            gap:8px;
+            z-index:999;
+            transition:.2s;
+        }
+
+        .order-btn:hover{
+            transform:translateY(-2px);
+            background:linear-gradient(180deg,#ffa563,#ff8c42);
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+            text-align: center;
+        }
+
+        h2 {
+            color: #FF8C42;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        #reader {
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto 25px auto;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 3px solid #FF8C42;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #FFF1E4;
+            border-radius: 12px;
+            font-size: 1.2em;
+            color: #FF8C42;
+            border: 2px dashed #FF8C42;
+            font-weight: bold;
+            min-height: 80px;
+        }
+
+        .qr-preview {
+            width: 160px;
+            margin-top: 10px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: 3px solid #FFE0C4;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #FF8C42;
+            margin-top: 25px;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            color: #FFA563;
+        }
+    </style>
+
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+</head>
+
+<body>
+
+<header>สแกน QR Code</header>
+
+<!-- ปุ่มดูออเดอร์ -->
+<a href="order-status.html" class="order-btn">
+    <i class="fa-solid fa-receipt"></i>
+    ดูสถานะอาหาร
+</a>
+
+<div class="container">
+
+    <h2>โปรดรอสถานะเมื่ออาหารเสร็จเเล้ว</h2>
+
+    <div id="reader"></div>
+
+    <div id="result">
+        <img src="qrcode.png" class="qr-preview" alt="QR Code ตัวอย่าง">
+    </div>
+
+    <br>
+    <a href="index.html" class="back-link">← กลับไปหน้าเมนู</a>
+</div>
+
+<script>
+    const html5QrCode = new Html5Qrcode("reader");
+    const qrConfig = { fps: 10, qrbox: 250 };
+    const resultDiv = document.getElementById("result");
+
+    Html5Qrcode.getCameras().then(cameras => {
+        if (cameras && cameras.length) {
+            html5QrCode.start(
+                { facingMode: "environment" },
+                qrConfig,
+                qrCodeMessage => {
+                    resultDiv.innerHTML = `
+                        <p>ผลลัพธ์ QR Code:</p>
+                        <p>${qrCodeMessage}</p>
+                    `;
+                }
+     
+        }
+    });
+</script>
+
+</body>
+
+</html>

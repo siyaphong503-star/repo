@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>ใบเสร็จรับเงิน | Run fast food</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#FFF7F0;
+    margin:0;
+    padding:0;
+}
+header{
+    background:#FF8C42;
+    color:#fff;
+    text-align:center;
+    padding:22px;
+    font-size:2em;
+    font-weight:bold;
+}
+.container{
+    max-width:700px;
+    margin:30px auto;
+    background:#fff;
+    padding:30px;
+    border-radius:16px;
+    box-shadow:0 6px 20px rgba(0,0,0,.12);
+}
+h2{
+    color:#FF8C42;
+    margin-bottom:20px;
+}
+label{
+    font-weight:bold;
+}
+input{
+    width:100%;
+    padding:12px;
+    margin-top:8px;
+    margin-bottom:18px;
+    border-radius:10px;
+    border:1px solid #ddd;
+    font-size:1em;
+}
+input[readonly]{
+    background:#f3f3f3;
+    cursor:not-allowed;
+}
+button{
+    width:100%;
+    background:#FF8C42;
+    color:#fff;
+    border:none;
+    padding:14px;
+    font-size:1.1em;
+    font-weight:bold;
+    border-radius:12px;
+    cursor:pointer;
+}
+button:hover{
+    background:#FFA563;
+}
+.receipt{
+    margin-top:25px;
+    padding:20px;
+    border:2px dashed #FF8C42;
+    border-radius:12px;
+    background:#FFF1E4;
+    display:none;
+}
+.receipt h3{
+    text-align:center;
+    margin-bottom:15px;
+}
+.back{
+    display:block;
+    margin-top:20px;
+    text-align:center;
+    color:#FF8C42;
+    font-weight:bold;
+    text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<header>ข้อมูลลูกค้า</header>
+
+<div class="container">
+    <h2>กรอกข้อมูลลูกค้า</h2>
+
+    <label>ชื่อลูกค้า</label>
+    <input type="text" id="customerName" placeholder="เช่น นายสมชาย ใจดี หรือ ชื่อเล่น">
+
+    <label>หมายเลขออเดอร์</label>
+    <input type="text" id="orderId" readonly>
+
+    <label>เบอร์โทรศัพท์</label>
+    <input type="number" id="total" placeholder="เช่น 012-345-6789">
+
+    <button onclick="generateReceipt()">
+        <i class="fa-solid fa-receipt"></i> บันทึกข้อมูลลูกค้า
+    </button>
+
+    <div class="receipt" id="receiptBox">
+        <h3>Run fast food</h3>
+        <p><b>ชื่อลูกค้า:</b> <span id="rName"></span></p>
+        <p><b>หมายเลขออเดอร์:</b> <span id="rOrder"></span></p>
+        <p><b>เบอร์โทรศัพท์:</b> <span id="rTotal"></span> </p>
+        <p><b>วันที่:</b> <span id="rDate"></span></p>
+    </div>
+
+    <a href="index.html" class="back">← กลับหน้าเมนู</a>
+</div>
+
+<script>
+//  r1 - r100 )
+const randomOrder = "r" + Math.floor(Math.random() * 100 + 1);
+document.getElementById("orderId").value = randomOrder;
+
+function generateReceipt(){
+    const name = document.getElementById("customerName").value;
+    const order = document.getElementById("orderId").value;
+    const total = document.getElementById("total").value;
+
+    if(!name || !total){
+        alert("กรุณากรอกข้อมูลให้ครบ");
+        return;
+    }
+
+    document.getElementById("rName").innerText = name;
+    document.getElementById("rOrder").innerText = order;
+    document.getElementById("rTotal").innerText = total;
+    document.getElementById("rDate").innerText =
+        new Date().toLocaleString("th-TH");
+
+    document.getElementById("receiptBox").style.display = "block";
+}
+</script>
+
+</body>
+</html>
