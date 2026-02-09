@@ -2,149 +2,214 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<title>Porjarunfood | เลือกเมนู</title>
+<title>Porrunfood | เข้าสู่ร้าน</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
+:root{
+    --neon:#ff7a18;
+    --neon2:#ffb347;
+    --dark:#050505;
+}
+
+*{ box-sizing:border-box; }
+
 body{
     margin:0;
     font-family:'Inter',sans-serif;
-    background:radial-gradient(circle at top, #222, #000);
+    background:
+      radial-gradient(circle at top, #1a1a1a, #000 70%);
     color:#fff;
     min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
+    overflow:hidden;
 }
 
-.container{
-    background:rgba(30,30,30,0.95);
-    border-radius:22px;
-    padding:40px 30px;
-    width:90%;
-    max-width:420px;
-    text-align:center;
-    box-shadow:0 25px 60px rgba(255,120,60,0.35);
-    border:2px solid rgba(255,150,100,0.35);
-}
-
-h1{
-    margin:0 0 10px;
-    font-size:2.2rem;
-    color:#ff8a3d;
-    font-weight:900;
-}
-
-p{
-    color:#ccc;
-    margin-bottom:30px;
-}
-
-.menu-btn{
-    display:block;
-    width:100%;
-    margin:14px 0;
-    padding:16px;
-    font-size:1.2rem;
-    font-weight:800;
-    border:none;
-    border-radius:16px;
-    cursor:pointer;
-    background:linear-gradient(180deg,#ff9a4f,#ff6a00);
-    color:#fff;
-    box-shadow:0 10px 26px rgba(255,130,70,0.45);
-    transition:.2s;
-}
-
-.menu-btn:hover{
-    transform:translateY(-4px) scale(1.04);
-    box-shadow:0 18px 36px rgba(255,140,80,0.55);
-}
-
-/* popup */
-.popup{
+/* ===== animated glow background ===== */
+.glow-bg{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,0.65);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    opacity:0;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(255,120,60,.18), transparent 45%),
+      radial-gradient(circle at 70% 70%, rgba(255,180,100,.15), transparent 45%);
+    animation:glowMove 10s ease-in-out infinite alternate;
+    z-index:0;
+}
+
+@keyframes glowMove{
+    from{filter:blur(20px)}
+    to{filter:blur(32px)}
+}
+
+/* ===== floating food ===== */
+.bg-decor{
+    position:fixed;
+    inset:0;
     pointer-events:none;
+    z-index:1;
+}
+
+.bg-decor img{
+    position:absolute;
+    opacity:.15;
+    filter:blur(.6px);
+    animation:float 26s ease-in-out infinite;
+}
+
+.bg-pan{width:260px; top:5%; left:5%;}
+.bg-chili{width:180px; bottom:20%; left:12%; animation-duration:18s;}
+.bg-spoon{width:220px; top:20%; right:10%; animation-duration:28s;}
+.bg-basil{width:300px; bottom:6%; right:12%; animation-duration:32s;}
+
+@keyframes float{
+    0%{transform:translateY(0) rotate(0deg)}
+    50%{transform:translateY(-34px) rotate(8deg)}
+    100%{transform:translateY(0) rotate(0deg)}
+}
+
+/* ===== admin ===== */
+.admin-btn{
+    position:fixed;
+    top:18px;
+    right:18px;
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    background:#000;
+    border:1px solid rgba(255,120,60,.5);
+    color:var(--neon);
+    font-size:22px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    box-shadow:0 0 18px rgba(255,120,60,.6);
+    transition:.3s;
+    z-index:10;
+}
+.admin-btn:hover{
+    background:var(--neon);
+    color:#000;
+    box-shadow:0 0 30px rgba(255,140,80,.9);
+}
+
+/* ===== main ===== */
+.container{
+    position:relative;
+    z-index:5;
+    text-align:center;
+    padding:20px;
+}
+
+/* ===== brand ===== */
+.brand{
+    font-size:2.6rem;
+    font-weight:900;
+    letter-spacing:2px;
+    color:var(--neon);
+    text-shadow:
+        0 0 12px rgba(255,120,60,.8),
+        0 0 36px rgba(255,120,60,.6);
+    animation:brandSlide 6s ease-in-out infinite;
+}
+
+@keyframes brandSlide{
+    0%{transform:translateX(-24px)}
+    50%{transform:translateX(24px)}
+    100%{transform:translateX(-24px)}
+}
+
+.tagline{
+    margin-top:10px;
+    font-size:.9rem;
+    letter-spacing:1px;
+    color:#bbb;
+}
+
+/* ===== glass card ===== */
+.glass{
+    margin-top:46px;
+    padding:40px 46px;
+    border-radius:36px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+    backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,.15);
+    box-shadow:
+      0 40px 90px rgba(0,0,0,.8);
+}
+
+/* ===== CTA ===== */
+.enter-btn{
+    padding:24px 62px;
+    font-size:1.8rem;
+    font-weight:900;
+    border-radius:999px;
+    border:none;
+    cursor:pointer;
+    letter-spacing:1px;
+    color:#000;
+    background:
+      linear-gradient(180deg,var(--neon2),var(--neon));
+    box-shadow:
+      0 0 0 0 rgba(255,120,60,.8),
+      0 20px 50px rgba(255,120,60,.7);
+    animation:pulse 2.2s infinite;
     transition:.25s;
 }
 
-.popup.active{
-    opacity:1;
-    pointer-events:auto;
+@keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(255,120,60,.7)}
+    70%{box-shadow:0 0 0 22px rgba(255,120,60,0)}
+    100%{box-shadow:0 0 0 0 rgba(255,120,60,0)}
 }
 
-.popup-box{
-    background:#111;
-    padding:28px;
-    border-radius:20px;
-    width:85%;
-    max-width:340px;
-    text-align:center;
-    border:2px solid rgba(255,140,80,0.5);
-    box-shadow:0 20px 50px rgba(255,120,60,0.5);
-    animation:pop .35s ease;
+.enter-btn:hover{
+    transform:scale(1.12);
 }
 
-@keyframes pop{
-    from{transform:scale(.7);opacity:0}
-    to{transform:scale(1);opacity:1}
-}
-
-.popup-box h2{
-    color:#ff8a3d;
-    margin-top:0;
-}
-
-.close-btn{
+/* ===== note ===== */
+.note{
     margin-top:20px;
-    padding:12px 18px;
-    border-radius:12px;
-    border:none;
-    background:#ff6a00;
-    color:#fff;
-    font-weight:700;
-    cursor:pointer;
+    font-size:.75rem;
+    color:#aaa;
+    letter-spacing:.5px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-    <h1>Porjarunfood</h1>
-    <p>เลือกรายการอาหาร</p>
+<div class="glow-bg"></div>
 
-   
+<div class="bg-decor">
+    <img src="image/yum.png" class="bg-pan">
+    <img src="image/krapao.png" class="bg-chili">
+    <img src="image/mutod.jpeg" class="bg-spoon">
+    <img src="image/musup.jpg" class="bg-basil">
 </div>
 
-<!-- popup -->
-<div class="popup" id="popup">
-    <div class="popup-box">
-        <h2>🔥 เมนูแนะนำ</h2>
-        <p>กะเพราหมูสับ / ยำรวม / ข้าวผัดพ่อรัน</p>
-        <button class="close-btn" onclick="closePopup()">ปิด</button>
+<a href="admin.html" class="admin-btn" title="ผู้ดูแล">👤</a>
+
+<div class="container">
+    <div class="brand">PORRUNFOOD</div>
+    <div class="tagline">STREET FOOD • FAST • REAL</div>
+
+    <div class="glass">
+        <button class="enter-btn" onclick="goMenu('index.html')">
+            สั่งอาหาร
+        </button>
+  
     </div>
 </div>
 
 <script>
 function goMenu(page){
     window.location.href = page;
-}
-
-function openPopup(){
-    document.getElementById('popup').classList.add('active');
-}
-
-function closePopup(){
-    document.getElementById('popup').classList.remove('active');
 }
 </script>
 

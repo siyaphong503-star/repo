@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>Admin | Porjarunfood</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    background:#0f0f0f;
+    color:#fff;
+}
+
+header{
+    background:#111;
+    padding:18px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:2px solid #ff6a00;
+}
+
+header h1{
+    margin:0;
+    color:#ff8a3d;
+}
+
+.logout{
+    color:#fff;
+    text-decoration:none;
+    font-weight:700;
+}
+
+.container{
+    padding:24px;
+    max-width:1100px;
+    margin:auto;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:#151515;
+    border-radius:18px;
+    padding:24px;
+    box-shadow:0 10px 30px rgba(0,0,0,.6);
+    border:1px solid rgba(255,140,80,.3);
+}
+
+.card h2{
+    margin-top:0;
+    color:#ff8a3d;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:14px;
+    padding:12px 16px;
+    border-radius:12px;
+    background:#ff6a00;
+    color:#fff;
+    text-decoration:none;
+    font-weight:700;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>👨‍🍳 Admin Porjarunfood</h1>
+    <a href="index.html" class="logout">ออกจากระบบ</a>
+</header>
+
+<div class="container">
+
+    <div class="cards">
+
+        <div class="card">
+            <h2>📋 จัดการเมนู</h2>
+            <p>เพิ่ม / แก้ไข / ลบ เมนูอาหาร</p>
+            <a href="#" class="btn">จัดการเมนู</a>
+        </div>
+
+        <div class="card">
+            <h2>📦 ออเดอร์</h2>
+            <p>ดูออเดอร์ที่ลูกค้าสั่ง</p>
+            <a href="#" class="btn">ดูออเดอร์</a>
+        </div>
+
+        <div class="card">
+            <h2>🏪 ข้อมูลร้าน</h2>
+            <p>ชื่อร้าน เวลาเปิด-ปิด</p>
+            <a href="#" class="btn">ตั้งค่าร้าน</a>
+        </div>
+
+        <div class="card">
+            <h2>📊 รายงานยอดขาย</h2>
+            <p>ยอดขายรายวัน / เดือน</p>
+            <a href="#" class="btn">ดูรายงาน</a>
+        </div>
+<a href="index.html" class="menu-item">
+    <div class="menu-label">เลือกเมนู Porrunfood</div>
+    </div>
+
+</div>
+
+</body>
+</html>
